@@ -4,5 +4,6 @@
 *.tfstate.backup
 *.zip
 # Terraform local files
-terraform/.terraform/
-
+.terraform/
+node_modules/
+lambda-dist/
