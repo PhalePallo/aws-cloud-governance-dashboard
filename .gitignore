@@ -1,9 +1,14 @@
-# Terraform local files
-.terraform/
-*.tfstate
-*.tfstate.backup
-*.zip
-# Terraform local files
-.terraform/
-node_modules/
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/terraform.tfvars
+terraform/.terraform.lock.hcl
+terraform/bin/
 lambda-dist/
+lambda.zip
+lambda-deployment.zip
+
+# Node
+node_modules/
+dist/

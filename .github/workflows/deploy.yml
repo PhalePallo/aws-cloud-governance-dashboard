@@ -1,0 +1,48 @@
+name: Deploy Dashboard
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: ./terraform
+
+  lambda-build:
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: ./lambda-src
+
+      - name: Zip Lambda
+        run: zip -r ../lambda.zip .
+        working-directory: ./lambda-src
+
+      - name: Terraform Apply Lambda
+        run: terraform apply -auto-approve
+        working-directory: ./terraform
