@@ -10,11 +10,11 @@ resource "aws_vpc" "main" {
 
 # Public subnets
 resource "aws_subnet" "public" {
-  for_each = toset(var.public_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = each.key
+  for_each                = toset(var.public_subnet_cidrs)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = each.key
   map_public_ip_on_launch = true
-  availability_zone = "${var.aws_region}a"
+  availability_zone       = "${var.aws_region}a"
   tags = {
     Name = "${var.project_name}-public-${each.key}"
   }
@@ -22,11 +22,11 @@ resource "aws_subnet" "public" {
 
 # Private subnets
 resource "aws_subnet" "private" {
-  for_each = toset(var.private_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = each.key
+  for_each                = toset(var.private_subnet_cidrs)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = each.key
   map_public_ip_on_launch = false
-  availability_zone = "${var.aws_region}a"
+  availability_zone       = "${var.aws_region}a"
   tags = {
     Name = "${var.project_name}-private-${each.key}"
   }
@@ -54,8 +54,8 @@ resource "aws_route_table" "public" {
 
 # Associate public subnets with route table
 resource "aws_route_table_association" "public_assoc" {
-  for_each   = aws_subnet.public
-  subnet_id  = each.value.id
+  for_each       = aws_subnet.public
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
 }
 

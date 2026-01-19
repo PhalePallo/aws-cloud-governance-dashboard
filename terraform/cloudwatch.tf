@@ -6,70 +6,70 @@ resource "aws_cloudwatch_dashboard" "lambda_dashboard" {
     widgets = [
       # Lambda Invocations
       {
-        type = "metric"
-        x = 0
-        y = 0
-        width = 12
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
         height = 6
         properties = {
           metrics = [
-            [ "AWS/Lambda", "Invocations", "FunctionName", aws_lambda_function.audit_api.function_name ]
+            ["AWS/Lambda", "Invocations", "FunctionName", aws_lambda_function.audit_api.function_name]
           ]
           period = 300
-          stat = "Sum"
+          stat   = "Sum"
           region = var.aws_region
-          title = "Lambda Invocations"
+          title  = "Lambda Invocations"
         }
       },
       # Lambda Errors
       {
-        type = "metric"
-        x = 12
-        y = 0
-        width = 12
+        type   = "metric"
+        x      = 12
+        y      = 0
+        width  = 12
         height = 6
         properties = {
           metrics = [
-            [ "AWS/Lambda", "Errors", "FunctionName", aws_lambda_function.audit_api.function_name ]
+            ["AWS/Lambda", "Errors", "FunctionName", aws_lambda_function.audit_api.function_name]
           ]
           period = 300
-          stat = "Sum"
+          stat   = "Sum"
           region = var.aws_region
-          title = "Lambda Errors"
+          title  = "Lambda Errors"
         }
       },
       # Lambda Duration
       {
-        type = "metric"
-        x = 0
-        y = 6
-        width = 12
+        type   = "metric"
+        x      = 0
+        y      = 6
+        width  = 12
         height = 6
         properties = {
           metrics = [
-            [ "AWS/Lambda", "Duration", "FunctionName", aws_lambda_function.audit_api.function_name ]
+            ["AWS/Lambda", "Duration", "FunctionName", aws_lambda_function.audit_api.function_name]
           ]
           period = 300
-          stat = "Average"
+          stat   = "Average"
           region = var.aws_region
-          title = "Lambda Duration (ms)"
+          title  = "Lambda Duration (ms)"
         }
       },
       # API Gateway 4XX
       {
-        type = "metric"
-        x = 12
-        y = 6
-        width = 12
+        type   = "metric"
+        x      = 12
+        y      = 6
+        width  = 12
         height = 6
         properties = {
           metrics = [
-            [ "AWS/ApiGateway", "4XXError", "ApiName", aws_api_gateway_rest_api.api.name ]
+            ["AWS/ApiGateway", "4XXError", "ApiName", aws_api_gateway_rest_api.api.name]
           ]
           period = 300
-          stat = "Sum"
+          stat   = "Sum"
           region = var.aws_region
-          title = "API Gateway 4XX Errors"
+          title  = "API Gateway 4XX Errors"
         }
       }
     ]

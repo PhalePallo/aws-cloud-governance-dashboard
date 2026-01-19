@@ -23,9 +23,9 @@ resource "aws_s3_object" "frontend_files" {
     "style.css"  = "${path.module}/../frontend/src/style.css"
   }
 
-  bucket       = aws_s3_bucket.frontend.id
-  key          = each.key
-  source       = each.value
+  bucket = aws_s3_bucket.frontend.id
+  key    = each.key
+  source = each.value
   content_type = lookup({
     "index.html" = "text/html"
     "app.js"     = "application/javascript"
