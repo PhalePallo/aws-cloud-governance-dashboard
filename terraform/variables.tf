@@ -1,14 +1,17 @@
- git status
-On branch main
-Your branch is up to date with 'origin/main'.
+variable "aws_region" {
+  description = "AWS region to deploy resources into"
+  type        = string
+  default     = "us-east-1"
+}
 
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        deleted:    .github/workflows/terraform.yml
-        modified:   terraform/variables.tf
-        deleted:    terraform/vpc.tf
+variable "project_name" {
+  description = "Name of the project"
+  type        = string
+  default     = "aws-cloud-governance-dashboard"
+}
 
-no changes added to commit (use "git add" and/or "git commit -a")
-
-phale@DESKTOP-VKF01OH MINGW64 ~/OneDrive/Desktop/Project/aws-cloud-governance-dashboard (main)
+variable "environment" {
+  description = "Deployment environment"
+  type        = string
+  default     = "dev"
+}
