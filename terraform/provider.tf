@@ -10,4 +10,5 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
+  # No access_key / secret_key needed; OIDC handles this in GitHub Actions
 }
