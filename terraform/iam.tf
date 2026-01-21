@@ -15,6 +15,7 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
+# CloudWatch logging for Lambda
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
@@ -28,8 +29,10 @@ resource "aws_iam_role_policy" "lambda_dynamodb_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = ["dynamodb:Scan"]
+        Effect = "Allow"
+        Action = [
+          "dynamodb:Scan"
+        ]
         Resource = aws_dynamodb_table.audit_logs.arn
       }
     ]
