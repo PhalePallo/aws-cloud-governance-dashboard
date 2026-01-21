@@ -7,6 +7,9 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  # Remote state backend (values passed via terraform init -backend-config=...)
+  backend "s3" {}
 }
 
 provider "aws" {
