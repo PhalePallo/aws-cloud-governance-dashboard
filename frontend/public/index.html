@@ -4,33 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AWS Cloud Governance Dashboard</title>
-
-  <!-- Assets are uploaded to S3 under /src/... (per your terraform/frontend.tf) -->
-  <link rel="stylesheet" href="./src/style.css?v=1" />
+  <link rel="stylesheet" href="./src/style.css?v=2" />
 </head>
 <body>
-  <header>
+  <header class="site-header">
     <h1>AWS Cloud Governance Dashboard</h1>
     <p>Read-only governance & audit visibility</p>
   </header>
 
-  <main>
+  <main class="container">
     <section class="controls">
-      <button id="loadLogsBtn" type="button">Load Audit Logs</button>
-      <p id="status" class="status" aria-live="polite"></p>
+      <div class="controls-row">
+        <button id="loadLogsBtn" type="button">Load Audit Logs</button>
+        <p id="status" class="status" aria-live="polite"></p>
+      </div>
+
+      <div class="controls-row controls-grid">
+        <div class="field">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Search action, resource, or ID" />
+        </div>
+
+        <div class="field">
+          <label for="actionFilter">Action</label>
+          <select id="actionFilter">
+            <option value="ALL" selected>All</option>
+            <option value="CREATE">CREATE</option>
+            <option value="UPDATE">UPDATE</option>
+            <option value="DELETE">DELETE</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sortSelect">Sort</label>
+          <select id="sortSelect">
+            <option value="NEWEST" selected>Newest first</option>
+            <option value="OLDEST">Oldest first</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Health</label>
+          <div id="health" class="health">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary" aria-label="Summary">
+      <div class="card">
+        <div class="card-label">Total</div>
+        <div class="card-value" id="sumTotal">0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Creates</div>
+        <div class="card-value" id="sumCreate">0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Updates</div>
+        <div class="card-value" id="sumUpdate">0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Deletes</div>
+        <div class="card-value" id="sumDelete">0</div>
+      </div>
     </section>
 
     <section class="panel">
-      <h2>Audit Logs</h2>
+      <div class="panel-head">
+        <h2>Audit Logs</h2>
+        <div class="panel-meta">
+          <span id="resultCount">0</span>
+          <span class="muted">results</span>
+        </div>
+      </div>
       <ul id="logs" class="logs"></ul>
     </section>
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <small>Static frontend — S3 + CloudFront ready</small>
   </footer>
 
-  <!-- IMPORTANT: module is also under /src/... -->
-  <script type="module" src="./src/app.js?v=1"></script>
+  <script type="module" src="./src/app.js?v=2"></script>
 </body>
 </html>

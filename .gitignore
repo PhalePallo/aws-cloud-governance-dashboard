@@ -17,3 +17,7 @@ node_modules/
 lambda.zip
 lambda-dist/
 
+
+# Lambda build artifacts
+lambda.zip
+lambda-dist/
