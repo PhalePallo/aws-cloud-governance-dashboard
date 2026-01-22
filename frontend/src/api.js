@@ -1,16 +1,16 @@
-// Live API Gateway endpoint
+// frontend/src/api.js
 const API_BASE_URL = "https://quyd2gaji3.execute-api.us-east-1.amazonaws.com/dev";
 
 export async function fetchAuditLogs() {
-  const response = await fetch(`${API_BASE_URL}/audit`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+  const url = `${API_BASE_URL}/audit`;
 
+  // Do NOT set Content-Type on a GET; it can trigger CORS preflight
+  const response = await fetch(url, { method: "GET" });
+
+  // Try to capture a useful error message
   if (!response.ok) {
-    throw new Error("API request failed");
+    const text = await response.text().catch(() => "");
+    throw new Error(`API request failed (${response.status}). ${text}`);
   }
 
   return response.json();

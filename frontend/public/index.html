@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AWS Cloud Governance Dashboard</title>
-  <link rel="stylesheet" href="../src/style.css" />
+
+  <!-- Assets are uploaded to S3 under /src/... (per your terraform/frontend.tf) -->
+  <link rel="stylesheet" href="./src/style.css?v=1" />
 </head>
 <body>
   <header>
@@ -13,14 +15,14 @@
   </header>
 
   <main>
-    <section>
-      <button id="loadLogsBtn">Load Audit Logs</button>
-      <p id="status"></p>
+    <section class="controls">
+      <button id="loadLogsBtn" type="button">Load Audit Logs</button>
+      <p id="status" class="status" aria-live="polite"></p>
     </section>
 
-    <section>
+    <section class="panel">
       <h2>Audit Logs</h2>
-      <ul id="logs"></ul>
+      <ul id="logs" class="logs"></ul>
     </section>
   </main>
 
@@ -28,7 +30,7 @@
     <small>Static frontend — S3 + CloudFront ready</small>
   </footer>
 
-  <!-- IMPORTANT -->
-  <script type="module" src="../src/app.js"></script>
+  <!-- IMPORTANT: module is also under /src/... -->
+  <script type="module" src="./src/app.js?v=1"></script>
 </body>
 </html>

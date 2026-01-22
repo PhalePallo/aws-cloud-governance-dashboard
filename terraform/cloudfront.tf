@@ -1,7 +1,16 @@
+resource "aws_cloudfront_origin_access_control" "frontend_oac" {
+  name                              = "${var.project_name}-frontend-oac"
+  description                       = "OAC for CloudFront to access S3 privately"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 resource "aws_cloudfront_distribution" "frontend" {
   origin {
-    domain_name = aws_s3_bucket.frontend.bucket_regional_domain_name
-    origin_id   = "frontend-s3-origin"
+    domain_name              = aws_s3_bucket.frontend.bucket_regional_domain_name
+    origin_id                = "frontend-s3-origin"
+    origin_access_control_id = aws_cloudfront_origin_access_control.frontend_oac.id
   }
 
   enabled             = true

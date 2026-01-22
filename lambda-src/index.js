@@ -1,33 +1,56 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
+"use strict";
 
-// Create a DynamoDB client
-const client = new DynamoDBClient({ region: process.env.AWS_REGION || "us-east-1" });
-const docClient = DynamoDBDocumentClient.from(client); // Wrap in DocumentClient for plain JSON
-const tableName = process.env.AUDIT_TABLE_NAME;
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, ScanCommand } = require("@aws-sdk/lib-dynamodb");
 
-export const handler = async (event) => {
+const client = new DynamoDBClient({});
+const docClient = DynamoDBDocumentClient.from(client);
+
+async function fetchLogs() {
+  const tableName = process.env.AUDIT_TABLE_NAME;
+
+  if (!tableName) {
+    console.error("AUDIT_TABLE_NAME env var is not set");
+    return [];
+  }
+
+  const result = await docClient.send(new ScanCommand({ TableName: tableName }));
+  return result.Items || [];
+}
+
+exports.handler = async (event) => {
   try {
-    // Scan the DynamoDB table
-    const command = new ScanCommand({ TableName: tableName });
-    const result = await docClient.send(command);
+    if (event && event.httpMethod === "GET") {
+      const logs = await fetchLogs();
 
-    // Return results to API Gateway
+      return {
+        statusCode: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(logs),
+      };
+    }
+
     return {
-      statusCode: 200,
-      headers: { 
+      statusCode: 405,
+      headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*" // important for CORS
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(result.Items || []), // Plain JSON now
+      body: JSON.stringify({ message: "Method Not Allowed" }),
     };
-  } catch (error) {
-    console.error("Lambda error:", error);
+  } catch (err) {
+    console.error("Lambda error:", err);
 
     return {
       statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: error.message }),
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ message: "Internal Server Error" }),
     };
   }
 };
