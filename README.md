@@ -180,37 +180,30 @@ Each event shows:
 - Metrics dashboard (CloudWatch)
 
 ---
-## Setup Instructions (Local + AWS)
-Prerequisites
+## ⚙️ Setup Instructions
 
-- Install the following tools:
+### Prerequisites
 
-- Git
+Ensure the following tools are installed:
 
-- Node.js 18+ (Node 20 recommended)
+- Git  
+- Node.js 18 or later (Node 20 recommended)  
+- Terraform 1.7 or later  
+- AWS CLI v2  
+- An AWS account (AWS Free Tier compatible)
 
-- Terraform 1.7+
+Optional:
+- PowerShell (Windows) for Lambda packaging
 
-- AWS CLI v2
-
-- An AWS account (Free Tier friendly)
-
-- Optional (recommended):
-
-- PowerShell (Windows) for packaging scripts
-
-- Repository Structure (High Level)
-
-- frontend/ — Static UI (HTML/CSS/JS)
-
-- backend/ — Backend source (handlers/services/scripts)
-
-- lambda-src/ — Lambda entry + bundling source
-
-- lambda-dist/ — Bundled Lambda output
-
-- terraform/ — Infrastructure as Code (S3, CloudFront, API Gateway, Lambda, DynamoDB, IAM)
 ---
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/PhalePallo/aws-cloud-governance-dashboard.git
+cd aws-cloud-governance-dashboard
+
+--- 
 
 ## 📌 Why This Project Matters
 
