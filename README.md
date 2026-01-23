@@ -180,6 +180,37 @@ Each event shows:
 - Metrics dashboard (CloudWatch)
 
 ---
+## Setup Instructions (Local + AWS)
+Prerequisites
+
+- Install the following tools:
+
+- Git
+
+- Node.js 18+ (Node 20 recommended)
+
+- Terraform 1.7+
+
+- AWS CLI v2
+
+- An AWS account (Free Tier friendly)
+
+- Optional (recommended):
+
+- PowerShell (Windows) for packaging scripts
+
+- Repository Structure (High Level)
+
+- frontend/ — Static UI (HTML/CSS/JS)
+
+- backend/ — Backend source (handlers/services/scripts)
+
+- lambda-src/ — Lambda entry + bundling source
+
+- lambda-dist/ — Bundled Lambda output
+
+- terraform/ — Infrastructure as Code (S3, CloudFront, API Gateway, Lambda, DynamoDB, IAM)
+---
 
 ## 📌 Why This Project Matters
 
